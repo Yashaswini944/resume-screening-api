@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Screening App</title>
+</head>
+<body>
+
+    <h2>Resume Screening App</h2>
+
+    <form id="uploadForm">
+        <label>Upload Resume (PDF):</label><br>
+        <input type="file" id="resume" accept="application/pdf" required><br><br>
+
+        <label>Job Description:</label><br>
+        <textarea id="jobDesc" rows="6" cols="50" placeholder="Enter job description..." required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Result:</h3>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById("resume");
+            const jobDesc = document.getElementById("jobDesc").value;
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("job_description", jobDesc);
+
+            const response = await fetch("http://127.0.0.1:8000/rank", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+            document.getElementById("result").textContent = JSON.stringify(result, null, 2);
+        });
+    </script>
+
+</body>
+</html>
