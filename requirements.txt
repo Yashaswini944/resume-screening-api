@@ -1,5 +1,9 @@
 fastapi
 uvicorn
+python-multipart
+pydantic
+pdfplumber
+PyPDF2
 scikit-learn
-pandas
 numpy
+
